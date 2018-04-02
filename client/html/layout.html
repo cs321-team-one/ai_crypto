@@ -42,3 +42,13 @@
         }
     </style>
 </head>
+
+<body>
+    {{> news}}
+</body>
+
+<template name="main layout">
+    <div class="main-content">
+        {{> yield}}
+    </div>
+</template>
