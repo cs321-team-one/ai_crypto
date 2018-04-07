@@ -1,9 +1,6 @@
 <template name="MainLayout">
     <header>
-        <h1>AI Cryptolizer</h1>
-        <a class="waves-effect waves-light btn">Bitcoin</a>
-        <a class="waves-effect waves-light btn">Litecoin</a>
-        <a class="waves-effect waves-light btn">Ethereum</a>
+
     </header>
     <main>
         <!--The following code inserts a template at the main position. Multiple templates in this forrmat can be
@@ -11,9 +8,29 @@
         Test template is applied to the MainLayout route. In future, these templates will be further broken up and not
         included at the bottom of the layout htmls but we can decide on what is easier for everyone!-->
         {{>Template.dynamic template=main}}
+
     </main>
 </template>
 
-<template name="Test">
-    Hello!
-</template>
+<!--<template name="Pricing">-->
+    <!--<div class="row">-->
+        <!--<div class="col s1 m4">-->
+            <!--<div class="card-panel blue-grey darken-1">-->
+        <!--<span class="white-text">Bitcoin-->
+        <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col s2 m4">-->
+            <!--<div class="card-panel blue-grey darken-1">-->
+        <!--<span class="white-text">Litecoin-->
+        <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col s3 m4">-->
+            <!--<div class="card-panel blue-grey darken-1">-->
+        <!--<span class="white-text">Ethereum-->
+        <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</template>-->
