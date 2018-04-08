@@ -1,19 +1,10 @@
-/* CSS declarations go here */
 body{
-    background-color: #3F5A63;
+    background-color: #eceff1;
 }
-
-header, main, footer {
-    padding-left: 200px;
-}
-
-@media only screen and (max-width : 992px) {
-    header, main, footer {
-        padding-left: 0;
-    }
-}
-
-.side-nav{
-    width: 200px;
-    background-color: cadetblue;
+.linkButton {
+    background: none;
+    border: none;
+    color: #0066ff;
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -1,41 +1,84 @@
 <template name="HomeLayout">
-<!--All items contained within header will show at all times EXCEPT for the links to the left which will change depending
- on which screen is viewed, i.e. if the home page is show then the news and resources links will appear, if news is shown
- then only the home and resources links will appear-->
-    <header>
-        <div class="navbar-fixed">
-            <nav>
-                <div class="nav-wrapper blue-grey darken-4">
-                    <a href="#" class="brand-logo center">AI Cryptolizer</a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <!--<li><a href="sass.html">Sass</a></li>-->
-                        <!--<li><a href="badges.html">Components</a></li>-->
-                        <!--<li><a href="collapsible.html">JavaScript</a></li>-->
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <ul id="slide-out" class="side-nav fixed">
-            <li><a href="#!">News</a></li>
-            <li><a href="#!">Resources</a></li>
-            <li><a href="#!">Second Sidebar Link</a></li>
-        </ul>
-        <!--<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
-    </header>
-    <main>
-        {{>Template.dynamic template=main}}
-    </main>
+    <div >
+        <!--All items contained within header will show at all times EXCEPT for the links to the left which will change depending
+         on which screen is viewed, i.e. if the home page is show then the news and resources links will appear, if news is shown
+         then only the home and resources links will appear-->
+        <header>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                  rel="stylesheet">
+            {{> mainNav}}
+
+        </header>
+        <main>
+            {{>Template.dynamic template=main}}
+        </main>
+
+    </div>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!--<script>-->
+        <!--$(document).ready(function() {-->
+
+        <!--});-->
+    <!--</script>-->
 </template>
 
 <template name="Main">
 
-    <nav> <!-- navbar content here  --> </nav>
+</template>
 
-    <ul id="slide-out" class="sidenav">
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+<template name="mainNav">
+    <nav>
+        <div class="nav-wrapper blue-grey darken-4">
+            <a href="/" class="brand-logo center">AI Cryptolizer</a>
+            <ul class="left">
+                <li>
+                    <a href="#" data-activates="slide-out" class="button-collapse-sidenav"><i class="material-icons">menu</i></a>
+                </li>
+                <li>
+                    {{> selectCrypto}}
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {{> mainSidenav}}
+
+</template>
+
+<template name="mainSidenav">
+    <ul id="slide-out" class="side-nav blue-grey lighten-5">
+        <li>
+            <div class="user-view">
+                <a href="#">AI Cryptolizer</a>
+            </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a href="/">Pricing</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/resources">Resources</a></li>
+        <li><a href="#!">Second Sidebar Link</a></li>
     </ul>
+</template>
+
+<template name="selectCrypto">
+
+    <div class="row">
+        <form class="col s12" id="crypto-select-form">
+            <div class="row">
+                <div class="input-field col s11">
+                    <input type="text" id="autocomplete-input" class="autocomplete" name="text">
+                    <label for="autocomplete-input">Select Cryptocurrency</label>
+                </div>
+                <div class="input-field col s1">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">select</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
 </template>
