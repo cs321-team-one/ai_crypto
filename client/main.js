@@ -4,7 +4,14 @@ import { Template } from 'meteor/templating';
 const supportedCryptocurrencies = {
     "Bitcoin (BTC)": null,
     "Ethereum (ETH)": null,
-    "Litecoin (LTC)": null
+    "Litecoin (LTC)": null,
+    "Ripple (XRP)": null,
+    "Bitcoin Cash (BCH)": null,
+    "EOS (EOS)": null,
+    "Cardano (ADA)": null,
+    "Stellar (XLM)": null,
+    "NEO (NEO)": null,
+    "IOTA (MIOTA)": null
 };
 
 Template.HomeLayout.rendered = function() {
