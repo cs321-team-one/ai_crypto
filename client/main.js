@@ -1,22 +1,42 @@
+import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
 
-// import './main.html';
+const supportedCryptocurrencies = {
+    "Bitcoin (BTC)": null,
+    "Ethereum (ETH)": null,
+    "Litecoin (LTC)": null,
+    "Ripple (XRP)": null,
+    "Bitcoin Cash (BCH)": null,
+    "EOS (EOS)": null,
+    "Cardano (ADA)": null,
+    "Stellar (XLM)": null,
+    "NEO (NEO)": null,
+    "IOTA (MIOTA)": null
+};
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+Template.HomeLayout.rendered = function() {
+    $(".button-collapse-sidenav").sideNav();
+    $('input.autocomplete').autocomplete({
+        data: supportedCryptocurrencies,
+    });
+};
+
+Template.HomeLayout.onCreated(function helloOnCreated() {
+    Session.set('cryptocurrecySelection', 'Bitcoin (BTC)');
 });
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
+Template.Pricing.helpers({
+    cryptocurrencySelection() {
+        return Session.get('cryptocurrecySelection');
+    }
 });
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+Template.HomeLayout.events({
+    'submit #crypto-select-form': function() {
+        event.preventDefault();
+        const formVal = event.target.text.value;
+        if(formVal in supportedCryptocurrencies){
+            Session.set('cryptocurrecySelection', formVal);
+        }
+    }
 });

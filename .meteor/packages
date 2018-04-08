@@ -23,3 +23,6 @@ materialize:materialize
 kadira:flow-router
 kadira:blaze-layout
 fastclick
+session
+sergeyt:typeahead
+frozeman:template-var
