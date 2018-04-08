@@ -23,3 +23,8 @@ body{
     position:absolute;
 
 }
+
+/*Override the stupid misaligning shit*/
+.input-field .label-icon{
+    transform: translateY(0px) !important;
+}
