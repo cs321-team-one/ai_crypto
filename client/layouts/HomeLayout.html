@@ -1,5 +1,5 @@
 <template name="HomeLayout">
-    <div >
+    <div>
         <!--All items contained within header will show at all times EXCEPT for the links to the left which will change depending
          on which screen is viewed, i.e. if the home page is show then the news and resources links will appear, if news is shown
          then only the home and resources links will appear-->
@@ -26,7 +26,7 @@
 <template name="mainNav">
     <nav>
         <div class="nav-wrapper blue-grey darken-4">
-            <a href="/" class="brand-logo center search-hide">AI Cryptolizer</a>
+            <a href="/" class="brand-logo center right hide-on-med-and-down">AI Cryptolizer</a>
             <ul class="left">
                 <li>
                     <a href="#" data-activates="slide-out" class="button-collapse-sidenav"><i class="material-icons">menu</i></a>
@@ -60,13 +60,28 @@
 
 <template name="selectCrypto">
 
-    <form id="navbarsearch"><div class="navfix"><div id="navfix2">
-        <div class="input-field">
-            <input id="autocomplete-input" type="search" name="text" class="expandable-search autocomplete">
-            <label class="label-icon" for="search"><i class="material-icons inline-icon">search</i></label>
-            <i class="material-icons">close</i>
-        </div></div></div>
-    </form>
+    <!--<form id="navbarsearch"><div class="navfix"><div id="navfix2">-->
+    <!--<div class="input-field">-->
+    <!--<input id="autocomplete-input" type="search" name="text" class="expandable-search autocomplete">-->
+    <!--<label class="label-icon" for="search"><i class="material-icons inline-icon">search</i></label>-->
+    <!--</div></div></div>-->
+    <!--</form>-->
+
+    <li>
+        <div class="center row">
+            <div class="col s12 ">
+                <form id="navbarsearch">
+                    <div class="row" id="topbarsearch">
+                        <div class="input-field col s6 s12">
+                            <i class="material-icons prefix">search</i>
+                            <input type="text" placeholder="Select Cryptocurrency" id="autocomplete-input"
+                                   class="autocomplete">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </li>
 
 </template>
 

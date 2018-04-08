@@ -14,17 +14,12 @@ body{
 
     }
 }
-.navfix {
-    position:relative;
-    margin-right: 0;
-}
-
-.navfix2 {
-    position:absolute;
-
-}
 
 /*Override the stupid misaligning shit*/
 .input-field .label-icon{
     transform: translateY(0px) !important;
+}
+
+.autocomplete-content {
+    position:absolute;
 }
