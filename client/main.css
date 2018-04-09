@@ -35,3 +35,7 @@ body{
 .row {
     margin-bottom: 0;
 }
+
+.flow-text {
+    padding: 5px;
+}

@@ -4,7 +4,7 @@ import { HTTP } from 'meteor/http';
 
 // Data from our NEWS api
 import { News } from '../lib/collections.js';
-
+const MAX_ARTICLES = 20;
 
 const supportedCryptocurrencies = {
     "Bitcoin (BTC)": null,
@@ -57,11 +57,21 @@ Template.HomeLayout.events({
 
 Template.News.helpers({
     newsArticles : function(){
-        return News.find({});
+        const articles = News.find({}, {
+            sort: { published_on: -1 },
+            limit: MAX_ARTICLES
+        });
+
+        let retArt = [];
+
+        articles.forEach((article)=>{
+            article['published_on'] = moment(article['published_on'] * 1000).format('MMMM Do YYYY, h:mm').toString();
+            retArt.push(article);
+        });
+
+        console.log(retArt);
+
+        return retArt
     }
 });
 
-Template.News.onRendered(function(){
-
-
-});
