@@ -22,7 +22,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <template name="articleContent">
@@ -34,18 +33,18 @@
             <h5>{{newsArticle.title}}</h5>
 
             <div class="hide-on-small-only">
-                <p class="flow-text" >{{newsArticle.body}}</p>
+                <p >{{newsArticle.body}}</p>
             </div>
 
         </div>
         <div class="card-action">
             <a href="{{newsArticle.url}}" class="article-modal-link">Visit page</a>
-            <a href="#modal1" class="waves-effect waves-light btn activator hide-on-med-and-up small right">More</a>
+            <a class="card-title activator grey-text text-darken-4 hide-on-med-and-up"><i class="material-icons right">fullscreen</i></a>
         </div>
     </div>
     <div class="card-reveal hide-on-med-and-up">
         <img class="responsive-img" src="{{newsArticle.imageurl}}">
         <span class="card-title grey-text text-darken-4">{{newsArticle.title}}<i class="material-icons right">close</i></span>
-        <p class="flow-text">{{newsArticle.body}}</p>
+        <p >{{newsArticle.body}}</p>
     </div>
 </template>
