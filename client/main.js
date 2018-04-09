@@ -69,8 +69,6 @@ Template.News.helpers({
             retArt.push(article);
         });
 
-        console.log(retArt);
-
         return retArt
     }
 });
