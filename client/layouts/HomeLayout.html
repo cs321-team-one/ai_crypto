@@ -1,7 +1,7 @@
 <template name="HomeLayout">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Content-Type"  content="text/html charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html charset=UTF-8"/>
 
     </head>
     <div>
@@ -31,19 +31,23 @@
 </template>
 
 <template name="mainNav">
-    <nav>
-        <div class="nav-wrapper blue-grey darken-4">
-            <a href="/" class="brand-logo center right hide-on-med-and-down">AI Cryptolizer</a>
-            <ul class="left">
-                <li>
-                    <a href="#" data-activates="slide-out" class="button-collapse-sidenav"><i class="material-icons">menu</i></a>
-                </li>
-                <li>
-                    {{> selectCrypto}}
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper blue-grey darken-4">
+                <a href="/" class="brand-logo center right hide-on-med-and-down">AI Cryptolizer</a>
+                <ul class="left">
+                    <li>
+                        <a href="#" data-activates="slide-out" class="button-collapse-sidenav"><i
+                                class="material-icons">menu</i></a>
+                    </li>
+                    <li>
+                        {{> selectCrypto}}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
     {{> mainSidenav}}
 
 </template>
@@ -53,7 +57,7 @@
         <li>
             <div class="user-view blue-grey darken-4">
                 <h4>
-                <a href="/" class="white-text">AI Cryptolizer</a>
+                    <a href="/" class="white-text">AI Cryptolizer</a>
                 </h4>
             </div>
         </li>
