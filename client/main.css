@@ -27,3 +27,11 @@ body{
 .news-model-img{
     alignment: center;
 }
+
+#article-more-button {
+    padding-bottom: 10px;
+}
+
+.row {
+    margin-bottom: 0;
+}

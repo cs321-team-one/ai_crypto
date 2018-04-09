@@ -63,6 +63,5 @@ Template.News.helpers({
 
 Template.News.onRendered(function(){
 
-    $('.modal').modal();
 
 });

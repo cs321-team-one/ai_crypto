@@ -14,46 +14,38 @@
 <template name="article">
     <div class="card collection-item">
         <div class="col s12 m7">
-            <div class="card horizontal">
-                <div class="card-image waves-effect waves-block waves-light hide-on-small-only">
-                    <img class="activator" src="{{newsArticle.imageurl}}">
-                </div>
-                <div class="card-stacked">
-
-                    <div class="card-content">
-                        <h5>{{newsArticle.title}}</h5>
-
-                        <div class="hide-on-small-only">
-                            <p>{{newsArticle.body}}</p>
-                        </div>
-
-                    </div>
-                    <div class="card-action">
-                        <a href="{{newsArticle.url}}" class="article-modal-link">Visit page</a>
-                        <!--<a href="#modal1" class="modal-trigger grey-text text-darken-4 hide-on-med-and-up"><i class="material-icons right">fullscreen</i></a>-->
-                        <a href="#modal1" class="waves-effect waves-light btn modal-trigger hide-on-med-and-up small right">More</a>
-
-                    </div>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{newsArticle.title}}<i class="material-icons right">close</i></span>
-                    <p>{{newsArticle.body}}</p>
-                </div>
+            <div class="card horizontal hide-on-small-only">
+                {{> articleContent newsArticle=newsArticle}}
+            </div>
+            <div class="card vertical hide-on-med-and-up">
+                {{> articleContent newsArticle=newsArticle}}
             </div>
         </div>
     </div>
 
-    <!-- Modal Structure -->
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <h4>{{newsArticle.title}}</h4>
-            <img class="responsive" src="{{newsArticle.imageurl}}">
-            <p class="flow-text">{{newsArticle.body}}</p>
+</template>
+
+<template name="articleContent">
+    <div class="card-image waves-effect waves-block waves-light">
+        <img class="activator responsive-img" src="{{newsArticle.imageurl}}">
+    </div>
+    <div class="card-stacked">
+        <div class="card-content">
+            <h5>{{newsArticle.title}}</h5>
+
+            <div class="hide-on-small-only">
+                <p class="flow-text" >{{newsArticle.body}}</p>
+            </div>
+
         </div>
-        <div class="modal-footer">
-            <a href="{{newsArticle.url}}" class="modal-action modal-close waves-effect waves-green btn-flat">Source Link</a>
+        <div class="card-action">
+            <a href="{{newsArticle.url}}" class="article-modal-link">Visit page</a>
+            <a href="#modal1" class="waves-effect waves-light btn activator hide-on-med-and-up small right">More</a>
         </div>
     </div>
-
-
+    <div class="card-reveal hide-on-med-and-up">
+        <img class="responsive-img" src="{{newsArticle.imageurl}}">
+        <span class="card-title grey-text text-darken-4">{{newsArticle.title}}<i class="material-icons right">close</i></span>
+        <p class="flow-text">{{newsArticle.body}}</p>
+    </div>
 </template>
