@@ -2,17 +2,13 @@
     <div class="container news-container">
         <h1 class="header">Top News</h1>
         <div class="collection">
-            {{#each newsArticles}}
-                {{> article}}
+            {{#each newsArticle in newsArticles}}
+                {{> article newsArticle=newsArticle}}
             {{/each}}
         </div>
     </div>
 
-    <script>
-        $(document).ready(function(){
-            $('.modal').modal();
-        });
-    </script>
+
 </template>
 
 <template name="article">
@@ -20,15 +16,15 @@
         <div class="col s12 m7">
             <div class="card horizontal">
                 <div class="card-image waves-effect waves-block waves-light hide-on-small-only">
-                    <img class="activator" src="{{imageurl}}">
+                    <img class="activator" src="{{newsArticle.imageurl}}">
                 </div>
                 <div class="card-stacked">
 
                     <div class="card-content">
-                        <h5>{{title}}</h5>
+                        <h5>{{newsArticle.title}}</h5>
 
                         <div class="hide-on-small-only">
-                            <p>{{body}}</p>
+                            <p>{{newsArticle.body}}</p>
                         </div>
 
                     </div>
@@ -40,8 +36,8 @@
                     </div>
                 </div>
                 <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{title}}<i class="material-icons right">close</i></span>
-                    <p>{{body}}</p>
+                    <span class="card-title grey-text text-darken-4">{{newsArticle.title}}<i class="material-icons right">close</i></span>
+                    <p>{{newsArticle.body}}</p>
                 </div>
             </div>
         </div>
@@ -50,11 +46,12 @@
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
         <div class="modal-content">
-            <h4>{{title}}</h4>
-            <p>{{body}}</p>
+            <h4>{{newsArticle.title}}</h4>
+            <img class="responsive" src="{{newsArticle.imageurl}}">
+            <p class="flow-text">{{newsArticle.body}}</p>
         </div>
         <div class="modal-footer">
-            <a href="{{url}}" class="modal-action modal-close waves-effect waves-green btn-flat">Source Link</a>
+            <a href="{{newsArticle.url}}" class="modal-action modal-close waves-effect waves-green btn-flat">Source Link</a>
         </div>
     </div>
 
