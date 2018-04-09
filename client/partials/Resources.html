@@ -1,3 +1,35 @@
 <template name="Resources">
-    Insert Resources code here!
+  <head>
+    <title>Resources</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Technical Term List</h1>
+      <div class="row">
+        {{#each terms}}
+    <!-- NOTE: Here you give each value in terms into the template, and it can latch on to it and use it-->
+
+          {{> Term}}
+
+        {{/each}}
+      </div>
+    </div>
+  </body>
+</template>
+
+
+<template name="Term">
+  <!-- NOTE: This uses 4/12 sections for each card, making 3 cards per row -->
+  <div class="col s4">
+     <div class="card">
+       <div class="card-content black-text">
+         <span class="card-title">{{text}}</span>
+       </div>
+       <div class="card-action">
+         <a href={{url}}>Investopedia Link</a>
+       </div>
+     </div>
+  </div>
 </template>

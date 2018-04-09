@@ -1,11 +1,17 @@
 <template name="HomeLayout">
-    <div >
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html charset=UTF-8"/>
+
+    </head>
+    <div>
         <!--All items contained within header will show at all times EXCEPT for the links to the left which will change depending
          on which screen is viewed, i.e. if the home page is show then the news and resources links will appear, if news is shown
          then only the home and resources links will appear-->
         <header>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                   rel="stylesheet">
+
             {{> mainNav}}
 
         </header>
@@ -15,15 +21,9 @@
 
     </div>
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!--<script>-->
-        <!--$(document).ready(function() {-->
 
-        <!--});-->
-    <!--</script>-->
 </template>
 
 <template name="Main">
@@ -31,54 +31,62 @@
 </template>
 
 <template name="mainNav">
-    <nav>
-        <div class="nav-wrapper blue-grey darken-4">
-            <a href="/" class="brand-logo center">AI Cryptolizer</a>
-            <ul class="left">
-                <li>
-                    <a href="#" data-activates="slide-out" class="button-collapse-sidenav"><i class="material-icons">menu</i></a>
-                </li>
-                <li>
-                    {{> selectCrypto}}
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper blue-grey darken-4">
+                <a href="/" class="brand-logo center right hide-on-med-and-down">AI Cryptolizer</a>
+                <ul class="left">
+                    <li>
+                        <a href="#" data-activates="slide-out" class="button-collapse-sidenav"><i
+                                class="material-icons">menu</i></a>
+                    </li>
+                    <li>
+                        {{> selectCrypto}}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
     {{> mainSidenav}}
 
 </template>
 
 <template name="mainSidenav">
-    <ul id="slide-out" class="side-nav blue-grey lighten-5">
+    <ul id="slide-out" class="side-nav">
         <li>
-            <div class="user-view">
-                <a href="#">AI Cryptolizer</a>
+            <div class="user-view blue-grey darken-4">
+                <h4>
+                    <a href="/" class="white-text">AI Cryptolizer</a>
+                </h4>
             </div>
         </li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a href="/">Pricing</a></li>
-        <li><a href="/news">News</a></li>
-        <li><a href="/resources">Resources</a></li>
-        <li><a href="#!">Second Sidebar Link</a></li>
+
+        <div class="collection">
+            <a href="/" class="collection-item sidenav-close black-text">Pricing</a>
+            <a href="/news" class="collection-item sidenav-close black-text">News</a>
+            <a href="/resources" class="collection-item sidenav-close black-text">Resources</a>
+        </div>
     </ul>
 </template>
 
 <template name="selectCrypto">
 
-    <div class="row">
-        <form class="col s12" id="crypto-select-form">
-            <div class="row">
-                <div class="input-field col s11">
-                    <input type="text" id="autocomplete-input" class="autocomplete" name="text">
-                    <label for="autocomplete-input">Select Cryptocurrency</label>
-                </div>
-                <div class="input-field col s1">
-                    <button class="btn waves-effect waves-light" type="submit" name="action">select</button>
-                </div>
+    <li>
+        <div class="center row">
+            <div class="col s12 ">
+                <form id="navbarsearch">
+                    <div class="row" id="topbarsearch">
+                        <div class="input-field col s6 s12">
+                            <i class="material-icons prefix">search</i>
+                            <input type="text" placeholder="Select Cryptocurrency" id="autocomplete-input"
+                                   class="autocomplete">
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
+        </div>
+    </li>
 
 </template>
+
