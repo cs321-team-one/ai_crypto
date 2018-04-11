@@ -3,7 +3,7 @@ import { HTTP } from 'meteor/http';
 import { News } from '../lib/collections.js';
 
 const NEWS_API = 'https://min-api.cryptocompare.com/data/news/?lang=EN';
-const NEWS_REFRESH_RATE = 60000 * 5;
+const NEWS_REFRESH_RATE = 120000;
 
 
 Meteor.methods({
