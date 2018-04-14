@@ -1,7 +1,31 @@
 <template name="Pricing">
+    <head>
+        <title>simple</title>
+    </head>
     <div class="container">
-        <h1>{{cryptocurrencySelection}}</h1>
+        <h2 class="pricing_header">{{cryptocurrencySelection}}</h2>
+        {{> Test}}
+        {{> cryptoCard}}
     </div>
+
 </template>
 
 
+
+<template name="cryptoCard">
+    <div class="col s1 m4">
+        <div class="card-panel blue-grey darken-1">
+            <h5 class="cryptoCard_header">{{cryptocurrencySelection}}</h5>
+
+            <p>Placeholder Value #1:</p>
+            <p>Placeholder Value #2:</p>
+            <p>Placeholder Value #3:</p>
+            <p>Placeholder Value #4:</p>
+        </div>
+    </div>
+</template>
+
+<template name="Test">
+    <span class="huge-text">Reserved for charts</span>
+    <div id="container"></div>
+</template>

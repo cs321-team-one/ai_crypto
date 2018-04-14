@@ -1,9 +1,11 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import { Highcharts } from 'highcharts/highcharts'
 import { HTTP } from 'meteor/http';
 
 // Data from our NEWS api
 import { News } from '../lib/collections.js';
+import { Pricing} from '../lib/collections.js';
 const MAX_ARTICLES = 20;
 
 const supportedCryptocurrencies = {
@@ -44,6 +46,12 @@ Template.Pricing.helpers({
     }
 });
 
+Template.cryptoCard.helpers({
+    cryptocurrencySelection() {
+        return Session.get('cryptocurrecySelection');
+    }
+});
+
 Template.HomeLayout.events({
     'submit #navbarsearch': function() {
         event.preventDefault();
@@ -73,9 +81,47 @@ Template.News.helpers({
     }
 });
 
+function createHigh() {
+    // Placeholder chart
+    $('#container').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            },
+        },
+        series: [
+            {
+                name: 'Jane',
+                data: [1, 0, 4]
+            }, {
+                name: 'John',
+                data: [5, 7, 3]
+            }
+        ]
+    });
+}
+
+Template.Test.onCreated(function() {
+});
+
+Template.Test.onRendered(function() {
+    this.autorun(() => {
+        createHigh();
+    });
+});
+
 import { Terms } from '../lib/collections.js'
 Template.Resources.helpers({
-  terms() {
-    return Terms.find({});
-  }
+    terms() {
+        return Terms.find({});
+    }
 })
