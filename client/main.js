@@ -73,6 +73,13 @@ Template.News.helpers({
     }
 });
 
+Template.articleContent.helpers({
+    isBuy: function() {
+        return this.newsArticle.prediction === "BUY";
+    }
+});
+
+
 import { Terms } from '../lib/collections.js'
 Template.Resources.helpers({
   terms() {
