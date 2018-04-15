@@ -32,17 +32,21 @@
     <div class="card-stacked">
         <div class="card-content">
             <h5>{{newsArticle.title}}</h5>
-            <p class="flow-text">{{newsArticle.published_on}}</p>
-
-            {{#if isBuy}}
+            <p class="flow-text">
+                {{#if isBuy}}
                 <span class="green-text flow-text">AI prediction: BUY</span>
-                {{else}}
+                    {{else}}
                 <span class="red-text flow-text">AI prediction: SELL</span>
-            {{/if}}
+                {{/if}}
+            </p>
 
-    <div class="hide-on-small-only">
-                <p >{{newsArticle.body}}</p>
+            <div class="hide-on-small-only">
+                        <p >{{newsArticle.body}}</p>
             </div>
+
+            <p align="right">
+                <span class="white-text">-- {{newsArticle.published_on}}</span>
+            </p>
 
         </div>
         <div class="card-action">
