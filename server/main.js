@@ -42,7 +42,7 @@ Meteor.setInterval(function() {
             try{
 
                 data.forEach((datum)=>{
-                    to_predict.push(datum['title'])
+                    to_predict.push(datum['body'])
                 });
 
                 const response = HTTP.call('POST', NEWS_PREDICTION_API, {
