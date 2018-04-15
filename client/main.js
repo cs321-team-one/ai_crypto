@@ -76,9 +76,6 @@ Template.News.helpers({
 Template.articleContent.helpers({
     isBuy: function() {
         return this.newsArticle.prediction === "BUY";
-    },
-    isSell: function () {
-        return this.newsArticle.prediction !== "SELL";
     }
 });
 
