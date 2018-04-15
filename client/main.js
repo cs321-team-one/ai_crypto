@@ -124,4 +124,4 @@ Template.Resources.helpers({
     terms() {
         return Terms.find({});
     }
-})
+});
