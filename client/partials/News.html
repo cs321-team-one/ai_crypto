@@ -1,23 +1,23 @@
 <template name="News">
     <div class="container news-container">
         <h1 class="header">Top News</h1>
-            {{#each newsArticle in newsArticles}}
-                {{> article newsArticle=newsArticle}}
-            {{/each}}
+        {{#each newsArticle in newsArticles}}
+            {{> article newsArticle=newsArticle}}
+        {{/each}}
     </div>
 
 
 </template>
 
 <template name="article">
-        <div class="col s12 m7">
-            <div class="card horizontal hide-on-small-only blue-grey darken-3">
-                {{> articleContent newsArticle=newsArticle}}
-            </div>
-            <div class="card vertical hide-on-med-and-up blue-grey darken-3">
-                {{> articleContent newsArticle=newsArticle}}
-            </div>
+    <div class="col s12 m7">
+        <div class="card horizontal hide-on-small-only blue-grey darken-3">
+            {{> articleContent newsArticle=newsArticle}}
         </div>
+        <div class="card vertical hide-on-med-and-up blue-grey darken-3">
+            {{> articleContent newsArticle=newsArticle}}
+        </div>
+    </div>
 </template>
 
 <template name="articleContent">
@@ -28,13 +28,27 @@
     <div class="card-stacked">
         <div class="card-content">
             <h5>{{newsArticle.title}}</h5>
-            <p class="flow-text">{{newsArticle.published_on}}</p>
-            {{#if newsArticle.prediction}}
-                <span class="white-text flow-text">Sentiment: {{newsArticle.prediction}}</span>
-            {{/if}}
+            <br />
+
+            <p class="flow-text">
+                {{#if isBuy}}
+                    <span class="green-text flow-text">AI prediction: BUY</span>
+                {{else}}
+                    <span class="red-text flow-text">AI prediction: SELL</span>
+                {{/if}}
+            </p>
+
+            <br/>
+
             <div class="hide-on-small-only">
                 <p >{{newsArticle.body}}</p>
             </div>
+
+            <br/>
+
+            <p align="right">
+                <span class="white-text">-- {{newsArticle.published_on}}</span>
+            </p>
 
         </div>
         <div class="card-action">
@@ -49,3 +63,5 @@
         <p class="white-text">{{newsArticle.body}}</p>
     </div>
 </template>
+
+
