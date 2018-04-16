@@ -46,3 +46,10 @@ body{
 .chartContainer {
     border-style: solid;
 }
+
+.card-content:after {
+  content: "";
+  display: block;
+  height: 50px;
+  width: 100%;
+}
