@@ -1,5 +1,6 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import { Highcharts } from 'highcharts/highcharts'
 import { HTTP } from 'meteor/http';
 
 // Data from our NEWS api
@@ -37,6 +38,44 @@ Template.HomeLayout.rendered = function() {
 Template.HomeLayout.onCreated(function () {
     Session.set('cryptocurrecySelection', 'Bitcoin (BTC)');
 });
+
+function createHigh() {
+    // Placeholder chart
+    $('#container').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            },
+        },
+        series: [
+            {
+                name: 'Jane',
+                data: [1, 0, 4]
+            }, {
+                name: 'John',
+                data: [5, 7, 3]
+            }
+        ]
+    });
+}
+
+    Template.Test.onCreated(function() {
+        });
+
+    Template.Test.onRendered(function() {
+            this.autorun(() => {
+                    createHigh();
+                });
+        });
 
 Template.Pricing.helpers({
     cryptocurrencySelection() {
@@ -85,4 +124,4 @@ Template.Resources.helpers({
   terms() {
     return Terms.find({});
   }
-})
+});

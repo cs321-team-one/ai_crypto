@@ -29,7 +29,7 @@ Meteor.startup(() => {
     News.rawCollection().createIndex({ id: 1 }, { unique: true });
     Terms.find().forEach(function(term) {
       if(!term.description) {
-        var websiteData = Scrape.website(term.url)
+        var websiteData = Scrape.website(term.url);
         Terms.update({text: term.text}, {$set: {"description" : websiteData.text}});
       }
     } );
@@ -78,3 +78,44 @@ Meteor.setInterval(function() {
         }
     });
 }, NEWS_REFRESH_RATE);
+
+Meteor.setInterval(function() {
+    Meteor.call('getNewsData', function(error, data) {
+        if(error){
+            console.error(error);
+        } else {
+            const to_predict = [];
+            let prediction = [];
+
+            try{
+                data.forEach((datum)=>{
+                    to_predict.push(datum['body'])
+                });
+
+                const response = HTTP.call('POST', NEWS_PREDICTION_API, {
+                    data: to_predict
+                });
+
+                prediction = response.data;
+
+            } catch (e) {
+                console.error('Could not predict news');
+                console.error(e);
+            }
+
+            data.forEach((datum, i)=>{
+                if(prediction.length === data.length){
+                    datum['prediction'] = prediction[i] === 1 ? 'BUY': 'SELL';
+                }
+
+                try{
+                    News.update(datum, datum, { upsert: true });
+                } catch (e) {
+                    console.error('Could not upsert a new article.');
+                }
+
+            });
+
+        }
+    });
+}, PRICING_REFRESH_RATE);
