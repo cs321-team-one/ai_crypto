@@ -11,7 +11,15 @@
         {{#each terms}}
     <!-- NOTE: Here you give each value in terms into the template, and it can latch on to it and use it-->
 
-          {{> Term}}
+          <div class="col s12 hide-on-med-and-up">
+              {{> Term}}
+          </div>
+          <div class="col s6 hide-on-small-only hide-on-large-only">
+              {{> Term}}
+          </div>
+          <div class="col s4 hide-on-med-and-down">
+              {{> Term}}
+          </div>
 
         {{/each}}
       </div>
@@ -21,15 +29,19 @@
 
 
 <template name="Term">
-  <!-- NOTE: This uses 4/12 sections for each card, making 3 cards per row -->
-  <div class="col s4">
-     <div class="card">
-       <div class="card-content black-text">
-         <span class="card-title">{{text}}</span>
-       </div>
-       <div class="card-action">
-         <a href={{url}}>Investopedia Link</a>
-       </div>
-     </div>
+
+  <div class="card small blue-grey darken-3 hoverable">
+   <div class="card-content">
+     <span class="card-title truncate text-lighten-3">
+      <h4 class="truncate">
+        {{text}}
+      </h4>
+     </span>
+     <span class="white-text"><p>{{description}}</p></span>
+   </div>
+   <div class="card-action">
+     <a href={{url}}>Investopedia Link</a>
+   </div>
   </div>
+
 </template>
