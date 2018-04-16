@@ -31,10 +31,12 @@
             <br />
 
             <p class="flow-text">
-                {{#if isBuy}}
-                    <span class="green-text flow-text">AI prediction: BUY</span>
-                {{else}}
-                    <span class="red-text flow-text">AI prediction: SELL</span>
+                {{#if newsArticle.prediction}}
+                    {{#if isBuy}}
+                        <span class="green-text flow-text">AI prediction: BUY</span>
+                    {{else}}
+                        <span class="red-text flow-text">AI prediction: SELL</span>
+                    {{/if}}
                 {{/if}}
             </p>
 

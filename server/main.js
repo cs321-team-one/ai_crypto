@@ -9,7 +9,7 @@ const NEWS_REFRESH_RATE = 60000 * 5;
 const PRICING_API = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,XRP,BCH,EOS,ADA,XLM,NEO,MIOTA&tsyms=USD,EUR';
 const PRICING_REFRESH_RATE = 60000 * 5;
 
-const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST REQUEST WITH JSON ARRAY DATA
+const NEWS_PREDICTION_API = 'http://oleg-aws.com:4444/news'; // THIS NEEDS A POST REQUEST WITH JSON ARRAY DATA
 
 
 Meteor.methods({
@@ -25,7 +25,7 @@ Meteor.methods({
 });
 
 Meteor.startup(() => {
-
+    News.rawCollection().createIndex({ id: 1 }, { unique: true });
 });
 
 
@@ -40,9 +40,8 @@ Meteor.setInterval(function() {
             let prediction = [];
 
             try{
-
                 data.forEach((datum)=>{
-                    to_predict.push(datum['title'])
+                    to_predict.push(datum['body'])
                 });
 
                 const response = HTTP.call('POST', NEWS_PREDICTION_API, {
@@ -56,19 +55,19 @@ Meteor.setInterval(function() {
                 console.error(e);
             }
 
-            try{
-                data.forEach((datum, i)=>{
-                    if(prediction.length === data.length){
-                        datum['prediction'] = prediction[i] === 1 ? 'BUY': 'SELL';
-                    }
+            data.forEach((datum, i)=>{
+                if(prediction.length === data.length){
+                    datum['prediction'] = prediction[i] === 1 ? 'BUY': 'SELL';
+                }
 
+                try{
                     News.update(datum, datum, { upsert: true });
+                } catch (e) {
+                    console.error('Could not upsert a new article.');
+                }
 
-                });
+            });
 
-            } catch(e){
-                console.error(e);
-            }
         }
     });
 }, NEWS_REFRESH_RATE);
