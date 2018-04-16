@@ -79,6 +79,7 @@ Template.articleContent.helpers({
     }
 });
 
+
 import { Terms } from '../lib/collections.js'
 Template.Resources.helpers({
   terms() {

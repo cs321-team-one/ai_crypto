@@ -27,22 +27,28 @@
         <img class="activator responsive-img" src="{{newsArticle.imageurl}}">
     </div>
 
-
-
     <div class="card-stacked">
         <div class="card-content">
             <h5>{{newsArticle.title}}</h5>
+            <br />
+
             <p class="flow-text">
-                {{#if isBuy}}
-                <span class="green-text flow-text">AI prediction: BUY</span>
+                {{#if newsArticle.prediction}}
+                    {{#if isBuy}}
+                        <span class="green-text flow-text">AI prediction: BUY</span>
                     {{else}}
-                <span class="red-text flow-text">AI prediction: SELL</span>
+                        <span class="red-text flow-text">AI prediction: SELL</span>
+                    {{/if}}
                 {{/if}}
             </p>
+
+            <br/>
 
             <div class="hide-on-small-only">
                         <p >{{newsArticle.body}}</p>
             </div>
+
+            <br/>
 
             <p align="right">
                 <span class="white-text">-- {{newsArticle.published_on}}</span>
