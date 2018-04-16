@@ -30,9 +30,14 @@
 
 <template name="Term">
 
-  <div class="card blue-grey darken-3">
-   <div class="card-content text-lighten-3">
-     <span class="card-title truncate">{{text}}</span>
+  <div class="card small blue-grey darken-3 hoverable">
+   <div class="card-content">
+     <span class="card-title truncate text-lighten-3">
+      <h4 class="truncate">
+        {{text}}
+      </h4>
+     </span>
+     <span class="white-text"><p>{{description}}</p></span>
    </div>
    <div class="card-action">
      <a href={{url}}>Investopedia Link</a>

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { News } from '../lib/collections.js';
 import { Pricing } from '../lib/collections.js';
+import { Terms } from '../lib/collections.js'
 
 const NEWS_API = 'https://min-api.cryptocompare.com/data/news/?lang=EN';
 const NEWS_REFRESH_RATE = 60000 * 5;
@@ -26,6 +27,12 @@ Meteor.methods({
 
 Meteor.startup(() => {
     News.rawCollection().createIndex({ id: 1 }, { unique: true });
+    Terms.find().forEach(function(term) {
+      if(!term.description) {
+        var websiteData = Scrape.website(term.url)
+        Terms.update({text: term.text}, {$set: {"description" : websiteData.text}});
+      }
+    } );
 });
 
 
@@ -71,4 +78,3 @@ Meteor.setInterval(function() {
         }
     });
 }, NEWS_REFRESH_RATE);
-
