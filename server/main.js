@@ -70,6 +70,7 @@ Meteor.setInterval(function() {
                 try{
                     News.update(datum, datum, { upsert: true });
                 } catch (e) {
+
                     // console.error('Could not upsert a new article.');
                 }
 
