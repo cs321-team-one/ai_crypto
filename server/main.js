@@ -104,22 +104,28 @@ Meteor.setInterval(function() {
 
 
 Meteor.setInterval(function(){
-    let current_ticker = 'BTC';
-    Meteor.call('getPricePredictionData', current_ticker, function(error, data){ // Prediction data is simply an array at minute intervals
-       if(error) console.error(error);
-       else{
-            let current_time = new Date();
-            data.forEach((datum, i)=>{
-                let prediction_time = moment(current_time).add(i+1, 'minutes');
-                let data_to_insert = {
-                    ticker_minute: `${current_ticker}_${i+1}`,
-                    price: datum,
-					ticker: current_ticker,
-                    time: prediction_time.toDate()
-                };
-                PricePredictions.update(data_to_insert.ticker_minute, data_to_insert, { upsert: true });
+
+    const DELAY_BETWEEN_REQUESTING_DIFFERENT_CRYPTOS = 1500;
+
+    CRYPTOS_TO_PREDICT.forEach((current_ticker)=>{
+        setTimeout(function(){
+            Meteor.call('getPricePredictionData', current_ticker, function(error, data){ // Prediction data is simply an array at minute intervals
+                if(error) console.error(error);
+                else{
+                    let current_time = new Date();
+                    data.forEach((datum, i)=>{
+                        let prediction_time = moment(current_time).add(i+1, 'minutes');
+                        let data_to_insert = {
+                            ticker_minute: `${current_ticker}_${i+1}`,
+                            price: datum,
+                            ticker: current_ticker,
+                            time: prediction_time.toDate()
+                        };
+                        PricePredictions.update(data_to_insert.ticker_minute, data_to_insert, { upsert: true });
+                    });
+                }
             });
-       }
+        }, DELAY_BETWEEN_REQUESTING_DIFFERENT_CRYPTOS);
     });
 }, PRICE_PREDICTION_REFRESH_RATE);
 
