@@ -8,12 +8,13 @@
         {{> cryptoCard}}
     </div>
 
-    <h2>Prediction for {{cryptocurrencySelection}}</h2>
 
     <div class="container">
+        <h2>Prediction for {{cryptocurrencySelection}}</h2>
+
         <ul class="collection">
             {{#each prediction in pricePrediction}}
-                <li class="collection-item">
+                <li class="collection-item blue-grey darken-1">
                     <p>Time: {{prediction.time}}</p>
                     <p>Price: {{prediction.price}}</p>
                 </li>
