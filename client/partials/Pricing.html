@@ -8,9 +8,17 @@
         {{> cryptoCard}}
     </div>
 
+    <h2>Prediction for {{cryptocurrencySelection}}</h2>
+    <ul class="collection">
+        {{#each prediction in PricePrediction}}
+            <li class="collection-item">
+                <p>Time: {{prediction.time}}</p>
+                <p>Price: {{prediction.price}}</p>
+            </li>
+        {{/each}}
+    </ul>
+
 </template>
-
-
 
 <template name="cryptoCard">
     <div class="col s1 m4">

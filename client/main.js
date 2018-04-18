@@ -4,7 +4,7 @@ import { Highcharts } from 'highcharts/highcharts'
 import { HTTP } from 'meteor/http';
 
 // Data from our NEWS api
-import { News } from '../lib/collections.js';
+import { News, PricePredictions} from '../lib/collections.js';
 const MAX_ARTICLES = 20;
 
 const supportedCryptocurrencies = {
@@ -80,6 +80,14 @@ function createHigh() {
 Template.Pricing.helpers({
     cryptocurrencySelection() {
         return Session.get('cryptocurrecySelection');
+    },
+    pricePrediction(){
+        let currentCryptocurrencySelection = Session.get('cryptocurrecySelection');
+        let ticker = currentCryptocurrencySelection.substring(
+            currentCryptocurrencySelection.indexOf('(') + 1,
+            currentCryptocurrencySelection.indexOf(')')
+        );
+        return PricePredictions.find({ ticker: ticker })
     }
 });
 
