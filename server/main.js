@@ -108,7 +108,7 @@ Meteor.setInterval(function(){
     const DELAY_BETWEEN_REQUESTING_DIFFERENT_CRYPTOS = 1500;
 
     CRYPTOS_TO_PREDICT.forEach((current_ticker)=>{
-        setTimeout(function(){
+        Meteor.setTimeout(function(){
             Meteor.call('getPricePredictionData', current_ticker, function(error, data){ // Prediction data is simply an array at minute intervals
                 if(error) console.error(error);
                 else{
