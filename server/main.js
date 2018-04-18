@@ -22,8 +22,7 @@ const PRICING_REFRESH_RATE = 60000 * 5;
 }
  */
 // You can change BTC to the cryptocurrency that cryptocompare supports.
-const PRICE_PREDICTION_REFRESH_RATE = 30000; // Price prediction goes 16 minutes into the future
-//const PRICE_PREDICTION_REFRESH_RATE = 60000 * 16; // Price prediction goes 16 minutes into the future
+const PRICE_PREDICTION_REFRESH_RATE = 60000 * 8; // Price prediction goes 16 minutes into the future
 const PRICE_PREDICTION_API = 'http://localhost:4444/price';
 const CRYPTOS_TO_PREDICT = ['BTC'];
 
