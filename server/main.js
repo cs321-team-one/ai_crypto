@@ -22,7 +22,8 @@ const PRICING_REFRESH_RATE = 60000 * 5;
 }
  */
 // You can change BTC to the cryptocurrency that cryptocompare supports.
-const PRICE_PREDICTION_REFRESH_RATE = 60000 * 16; // Price prediction goes 16 minutes into the future
+const PRICE_PREDICTION_REFRESH_RATE = 30000; // Price prediction goes 16 minutes into the future
+//const PRICE_PREDICTION_REFRESH_RATE = 60000 * 16; // Price prediction goes 16 minutes into the future
 const PRICE_PREDICTION_API = 'http://localhost:4444/price';
 const CRYPTOS_TO_PREDICT = ['BTC'];
 
@@ -37,8 +38,10 @@ Meteor.methods({
         return result.data;
     },
     'getPricePredictionData'(ticker){
-        const response = HTTP.call('POST', {
-            ticker: ticker
+        const response = HTTP.call('POST', PRICE_PREDICTION_API, {
+            data: {
+				ticker: ticker
+			}
         });
         return response.data;
     }
@@ -46,8 +49,8 @@ Meteor.methods({
 
 Meteor.startup(() => {
     News.rawCollection().createIndex({ id: 1 }, { unique: true });
-    PricePredictions.rawCollection().createIndex({ id: 1 }, { unique: true });
-
+    PricePredictions.rawCollection().createIndex({ ticker: 1 }, { unique: false });
+    PricePredictions.rawCollection().createIndex({ ticker_minute: 1 }, { unique: true });
 
     Terms.find().forEach(function(term) {
       if(!term.description) {
@@ -107,13 +110,14 @@ Meteor.setInterval(function(){
        else{
             let current_time = new Date();
             data.forEach((datum, i)=>{
-                let prediction_time = moment(current_time).add(i, 'minutes');
+                let prediction_time = moment(current_time).add(i+1, 'minutes');
                 let data_to_insert = {
-                    id: `${current_ticker}_${i}`,
+                    ticker_minute: `${current_ticker}_${i+1}`,
                     price: datum,
+					ticker: current_ticker,
                     time: prediction_time.toDate()
                 };
-                PricePredictions.update(data_to_insert.id, data_to_insert, { upsert: true });
+                PricePredictions.update(data_to_insert.ticker_minute, data_to_insert, { upsert: true });
             });
        }
     });
