@@ -69,10 +69,7 @@ Meteor.setInterval(function() {
 
                 try{
                     News.update(datum, datum, { upsert: true });
-                } catch (e) {
-
-                    // console.error('Could not upsert a new article.');
-                }
+                } catch (e) {}
 
             });
 
@@ -80,6 +77,7 @@ Meteor.setInterval(function() {
     });
 }, NEWS_REFRESH_RATE);
 
+/*
 Meteor.setInterval(function() {
     Meteor.call('getNewsData', function(error, data) {
         if(error){
@@ -120,3 +118,5 @@ Meteor.setInterval(function() {
         }
     });
 }, PRICING_REFRESH_RATE);
+
+*/
