@@ -4,7 +4,7 @@ import { Highcharts } from 'highcharts/highcharts'
 import { HTTP } from 'meteor/http';
 
 // Data from our NEWS api
-import { News, PricePredictions} from '../lib/collections.js';
+import { News, PricePredictions, Terms} from '../lib/collections.js';
 const MAX_ARTICLES = 20;
 
 const supportedCryptocurrencies = {
@@ -20,6 +20,9 @@ const supportedCryptocurrencies = {
     "IOTA (MIOTA)": null
 };
 
+/*
+    UNIVERSAL (HOME) HELPERS
+ */
 
 Template.HomeLayout.rendered = function() {
     $(".button-collapse-sidenav").sideNav({
@@ -38,6 +41,21 @@ Template.HomeLayout.rendered = function() {
 Template.HomeLayout.onCreated(function () {
     Session.set('cryptocurrecySelection', 'Bitcoin (BTC)');
 });
+
+Template.HomeLayout.events({
+    'submit #navbarsearch': function() {
+        event.preventDefault();
+        console.log(event.target.text.value);
+        const formVal = event.target.text.value;
+        if(formVal in supportedCryptocurrencies){
+            Session.set('cryptocurrecySelection', formVal);
+        }
+    }
+});
+
+/*
+    PRICE HELPERS
+ */
 
 function createHigh() {
     // Placeholder chart
@@ -68,14 +86,14 @@ function createHigh() {
     });
 }
 
-    Template.Test.onCreated(function() {
-        });
+Template.Test.onCreated(function() {
+    });
 
-    Template.Test.onRendered(function() {
-            this.autorun(() => {
-                    createHigh();
-                });
-        });
+Template.Test.onRendered(function() {
+    this.autorun(() => {
+        createHigh();
+    });
+});
 
 Template.Pricing.helpers({
     cryptocurrencySelection() {
@@ -91,16 +109,9 @@ Template.Pricing.helpers({
     }
 });
 
-Template.HomeLayout.events({
-    'submit #navbarsearch': function() {
-        event.preventDefault();
-        console.log(event.target.text.value);
-        const formVal = event.target.text.value;
-        if(formVal in supportedCryptocurrencies){
-            Session.set('cryptocurrecySelection', formVal);
-        }
-    }
-});
+/*
+    NEWS HELPERS
+ */
 
 Template.News.helpers({
     newsArticles : function(){
@@ -120,14 +131,17 @@ Template.News.helpers({
     }
 });
 
+
 Template.articleContent.helpers({
     isBuy: function() {
         return this.newsArticle.prediction === "BUY";
     }
 });
 
+/*
+    RESOURCES HELPERS
+ */
 
-import { Terms } from '../lib/collections.js'
 Template.Resources.helpers({
   terms() {
     return Terms.find({});
