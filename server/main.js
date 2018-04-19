@@ -27,14 +27,7 @@ const PRICE_PREDICTION_API = 'http://localhost:4444/price';
 const CRYPTOS_TO_PREDICT = [
     "BTC",
     "ETH",
-    "LTC",
-    "XRP",
-    "BCH",
-    "EOS",
-    "ADA",
-    "XLM",
-    "NEO",
-    "MIOTA"
+    "LTC"
 ];
 
 Meteor.methods({
@@ -114,7 +107,7 @@ Meteor.setInterval(function() {
 
 Meteor.setInterval(function(){
 
-    const DELAY_BETWEEN_REQUESTING_DIFFERENT_CRYPTOS = 1500;
+    const DELAY_BETWEEN_REQUESTING_DIFFERENT_CRYPTOS = 5000;
 
     CRYPTOS_TO_PREDICT.forEach((current_ticker)=>{
         Meteor.setTimeout(function(){

@@ -7,6 +7,7 @@ import { HTTP } from 'meteor/http';
 import { News, PricePredictions, Terms} from '../lib/collections.js';
 const MAX_ARTICLES = 20;
 
+/*
 const supportedCryptocurrencies = {
     "Bitcoin (BTC)": null,
     "Ethereum (ETH)": null,
@@ -17,8 +18,16 @@ const supportedCryptocurrencies = {
     "Cardano (ADA)": null,
     "Stellar (XLM)": null,
     "NEO (NEO)": null,
-    "IOTA (MIOTA)": null
+    "IOTA (MIOTA)": oull
 };
+*/
+
+const supportedCryptocurrencies = {
+    "Bitcoin (BTC)": null,
+    "Ethereum (ETH)": null,
+    "Litecoin (LTC)": null,
+};
+
 
 /*
     UNIVERSAL (HOME) HELPERS
