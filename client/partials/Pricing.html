@@ -8,18 +8,9 @@
         {{> cryptoCard}}
     </div>
 
-
     <div class="container">
-        <h2>Prediction for {{cryptocurrencySelection}}</h2>
-
-        <ul class="collection">
-            {{#each prediction in pricePrediction}}
-                <li class="collection-item blue-grey darken-1">
-                    <p>Time: {{prediction.time}}</p>
-                    <p>Price: {{prediction.price}}</p>
-                </li>
-            {{/each}}
-        </ul>
+        <h2>Price Prediction</h2>
+        {{> PricePrediction}}
     </div>
 
 </template>
@@ -39,4 +30,25 @@
 <template name="Test">
     <span class="huge-text">Reserved for charts</span>
     <div id="container"></div>
+</template>
+
+
+<template name="PricePrediction">
+    <div id="prediction-chart">
+    </div>
+</template>
+
+<template name="PricePredictionList">
+    <div class="container">
+        <h2>Prediction for {{cryptocurrencySelection}}</h2>
+
+        <ul class="collection">
+            {{#each prediction in pricePrediction}}
+                <li class="collection-item blue-grey darken-1">
+                    <p>Time: {{prediction.time}}</p>
+                    <p>Price: {{prediction.price}}</p>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
 </template>

@@ -57,43 +57,36 @@ Template.HomeLayout.events({
     PRICE HELPERS
  */
 
-function createHigh() {
-    // Placeholder chart
-    $('#container').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Fruit Consumption'
-        },
-        xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
-        },
-        yAxis: {
-            title: {
-                text: 'Fruit eaten'
-            },
-        },
-        series: [
-            {
-                name: 'Jane',
-                data: [1, 0, 4]
-            }, {
-                name: 'John',
-                data: [5, 7, 3]
-            }
-        ]
-    });
-}
-
-Template.Test.onCreated(function() {
-    });
-
 Template.Test.onRendered(function() {
     this.autorun(() => {
-        createHigh();
+        $('#container').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Fruit Consumption'
+            },
+            xAxis: {
+                categories: ['Apples', 'Bananas', 'Oranges']
+            },
+            yAxis: {
+                title: {
+                    text: 'Fruit eaten'
+                },
+            },
+            series: [
+                {
+                    name: 'Jane',
+                    data: [1, 0, 4]
+                }, {
+                    name: 'John',
+                    data: [5, 7, 3]
+                }
+            ]
+        });
     });
 });
+
 
 Template.Pricing.helpers({
     cryptocurrencySelection() {
@@ -109,10 +102,68 @@ Template.Pricing.helpers({
     }
 });
 
+Template.PricePrediction.onRendered(function() {
+    this.autorun(() => {
+        let currentCryptocurrencySelection = Session.get('cryptocurrecySelection');
+        let ticker = currentCryptocurrencySelection.substring(
+            currentCryptocurrencySelection.indexOf('(') + 1,
+            currentCryptocurrencySelection.indexOf(')')
+        );
+        let data = PricePredictions.find({ ticker: ticker });
+
+        let priceArray = [];
+        let timesArray = [];
+
+        data.forEach((datum)=>{
+            priceArray.push(datum.price);
+            timesArray.push(datum.time);
+        });
+
+        let startDate = moment(timesArray[0]).toDate();
+        startDate = Date.UTC(
+            startDate.getFullYear(),
+            startDate.getMonth(),
+            startDate.getDay(),
+            startDate.getHours(),
+            startDate.getMinutes()
+        );
+
+        $('#prediction-chart').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Price Prediction'
+            },
+            xAxis: {
+                type: 'datetime'
+
+            },
+            yAxis: {
+                title: {
+                    text: 'Price'
+                },
+            },
+            plotOptions:{
+                series: {
+                    pointStart: startDate
+                }
+            },
+            series: [
+                {
+                    name: Session.get('cryptocurrecySelection'),
+                    data: priceArray,
+                    pointInterval: 1000 * 60 // one minute
+                }
+            ]
+        });
+    });
+});
+
+
 /*
     NEWS HELPERS
  */
-
 Template.News.helpers({
     newsArticles : function(){
         const articles = News.find({}, {
@@ -147,3 +198,5 @@ Template.Resources.helpers({
     return Terms.find({});
   }
 });
+
+

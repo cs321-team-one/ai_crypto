@@ -5,7 +5,7 @@ import { News, Pricing, PricePredictions, Terms } from '../lib/collections.js';
 
 // News related constants
 const NEWS_API = 'https://min-api.cryptocompare.com/data/news/?lang=EN';
-const NEWS_REFRESH_RATE = 60000 * 5;
+const NEWS_REFRESH_RATE = 60000 * 8;
 const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST REQUEST WITH JSON ARRAY DATA
 
 
@@ -24,8 +24,18 @@ const PRICING_REFRESH_RATE = 60000 * 5;
 // You can change BTC to the cryptocurrency that cryptocompare supports.
 const PRICE_PREDICTION_REFRESH_RATE = 60000 * 8; // Price prediction goes 16 minutes into the future
 const PRICE_PREDICTION_API = 'http://localhost:4444/price';
-const CRYPTOS_TO_PREDICT = ['BTC'];
-
+const CRYPTOS_TO_PREDICT = [
+    "BTC",
+    "ETH",
+    "LTC",
+    "XRP",
+    "BCH",
+    "EOS",
+    "ADA",
+    "XLM",
+    "NEO",
+    "MIOTA"
+];
 
 Meteor.methods({
     'getNewsData'(){
