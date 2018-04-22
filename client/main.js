@@ -200,17 +200,14 @@ Template.PricePrediction.onRendered(function() {
             timesArray.push(datum.time);
         });
 
-
-        let startDate = moment(timesArray[0]*1000).utc().valueOf();
-
-        // let startDate = moment(timesArray[0]).toDate();
-        // startDate = Date.UTC(
-        //     startDate.getFullYear(),
-        //     startDate.getMonth(),
-        //     startDate.getDay(),
-        //     startDate.getHours(),
-        //     startDate.getMinutes()
-        // );
+        let startDate = moment(timesArray[0]).toDate();
+        startDate = Date.UTC(
+            startDate.getFullYear(),
+            startDate.getMonth(),
+            startDate.getDay(),
+            startDate.getHours(),
+            startDate.getMinutes()
+        );
 
         $('#prediction-chart').highcharts({
             chart: {
