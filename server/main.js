@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
-import { News, Pricing, PricePredictions, Terms } from '../lib/collections.js';
+import { News, Pricing, PricePredictions, Terms, CurrentPriceSocket} from '../lib/collections.js';
+import cryptoSocket from "crypto-socket";
 
 
 // News related constants
@@ -60,12 +61,21 @@ Meteor.methods({
     }
 });
 
+function initPriceSocket() {
+    let tickersToSubscribe = [];
+    CRYPTOS_TO_PREDICT.forEach((ticker)=>{
+        tickersToSubscribe.push(ticker+'USD');
+    });
+    cryptoSocket.start('bitfinex', tickersToSubscribe);
+}
+
 Meteor.startup(() => {
     News.rawCollection().createIndex({ id: 1 }, { unique: true });
     PricePredictions.rawCollection().createIndex({ ticker: 1 }, { unique: false });
     PricePredictions.rawCollection().createIndex({ ticker_minute: 1 }, { unique: true });
 
     Pricing.rawCollection().createIndex({ticker: 1}, {unique: true});
+    CurrentPriceSocket.rawCollection().createIndex({ticker: 1}, {unique: true});
 
     Terms.find().forEach(function(term) {
         if(!term.description) {
@@ -73,6 +83,9 @@ Meteor.startup(() => {
             Terms.update({text: term.text}, {$set: {"description" : websiteData.text}});
         }
     } );
+
+    initPriceSocket();
+
 });
 
 
@@ -164,55 +177,20 @@ Meteor.setInterval(function () {
     });
 },PRICE_REFRESH_RATE);
 
-// Meteor.setInterval(function (current_ticker) {
-//     Meteor.call('geCurrPricingData', current_ticker, function (error,data) {
-//         if(error) console.error(error);
-//         else{
-//
-//         }
-//     })
-// })
 
-/*
-Meteor.setInterval(function() {
-    Meteor.call('getNewsData', function(error, data) {
-        if(error){
-            console.error(error);
-        } else {
-            const to_predict = [];
-            let prediction = [];
+Meteor.setInterval(()=>{
+    let currentPrice = cryptoSocket.Exchanges['bitfinex'];
 
-            try{
-                data.forEach((datum)=>{
-                    to_predict.push(datum['body'])
-                });
+    if(currentPrice !== undefined){
+        for(let key in currentPrice) {
+            let currentTicker = key.replace('USD', '');
+            let currentPriceToAdd = {
+                ticker: currentTicker,
+                price: currentPrice[key]
+            };
 
-                const response = HTTP.call('POST', NEWS_PREDICTION_API, {
-                    data: to_predict
-                });
-
-                prediction = response.data;
-
-            } catch (e) {
-                console.error('Could not predict news');
-                console.error(e);
-            }
-
-            data.forEach((datum, i)=>{
-                if(prediction.length === data.length){
-                    datum['prediction'] = prediction[i] === 1 ? 'BUY': 'SELL';
-                }
-
-                try{
-                    News.update(datum, datum, { upsert: true });
-                } catch (e) {
-                    console.error('Could not upsert a new article.');
-                }
-
-            });
-
+            CurrentPriceSocket.update({ticker: currentTicker}, currentPriceToAdd, {upsert: true});
         }
-    });
-}, PRICING_REFRESH_RATE);
+    }
 
-*/
+}, 1000);

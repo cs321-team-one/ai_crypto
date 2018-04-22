@@ -4,7 +4,7 @@ import { Highcharts } from 'highcharts/highcharts'
 import { HTTP } from 'meteor/http';
 
 // Data from our NEWS api
-import { News, PricePredictions, Terms} from '../lib/collections.js';
+import { News, PricePredictions, Terms, CurrentPriceSocket} from '../lib/collections.js';
 const MAX_ARTICLES = 20;
 
 /*
@@ -108,6 +108,16 @@ Template.Pricing.helpers({
             currentCryptocurrencySelection.indexOf(')')
         );
         return PricePredictions.find({ ticker: ticker })
+    },
+    currentPrice(){
+        let currentCryptocurrencySelection = Session.get('cryptocurrecySelection');
+        let ticker = currentCryptocurrencySelection.substring(
+            currentCryptocurrencySelection.indexOf('(') + 1,
+            currentCryptocurrencySelection.indexOf(')')
+        );
+        let currentData = CurrentPriceSocket.findOne({ticker: ticker});
+
+        return currentData.price.toFixed(2);
     }
 });
 

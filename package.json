@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.44",
+    "crypto-socket": "^3.0.0",
     "highcharts": "^6.1.0",
     "meteor-node-stubs": "^0.3.2"
   }
