@@ -134,45 +134,51 @@ Template.Pricing.onRendered(function(){
        PricingQuery.forEach((query, i)=>{
           if(i === 0){
               let OHLC = [];
-
+              let timeArray = [];
               query.data.forEach((priceDatum,i)=>{
-                  OHLC.push([priceDatum.time,priceDatum.open, priceDatum.high, priceDatum.low, priceDatum.close,])
-                  console.log(OHLC);
+                  OHLC.push(priceDatum.close);
+                  timeArray.push(priceDatum.time);
+                  //priceDatum.time,priceDatum.open, priceDatum.high, priceDatum.low,
+              });
+              let startDate = moment(timeArray[0]*1000).utc().valueOf();
+
+              $('#pricing-chart').highcharts({
+                  chart: {
+                      type: 'line'
+                  },
+                  title: {
+                      text: 'Closing Price'
+                  },
+
+                  yAxis: [{
+                      title: {
+                          text: 'Price'
+                      },
+                  }],
+                  xAxis: {
+                      type: 'datetime',
+                      title: {
+                          text: 'Time'
+                      }
+                  },
+                  plotOptions:{
+                      series: {
+                          pointStart: startDate
+                      }
+                  },
+                  series: [{
+                      type: 'line',
+                      name: currentCryptocurrencySelection,
+                      data: OHLC,
+                      pointInterval: 1000 * 60
+                  }]
+
               });
           }
-       });
-       $('#pricing-chart').highcharts({
-           chart: {
-               type: 'line'
-           },
-           title: {
-               text: 'Price'
-           },
-
-           yAxis: [{
-               title: {
-                   text: 'Price'
-               },
-           }],
-           xAxis: {
-               type: 'dateTime',
-               title: {
-                   text: 'Time'
-               }
-           },
-           // plotOptions:{
-           //     series: {
-           //         pointStart: startDate
-           //     }
-           // },
-           // series: [{
-           //     type: 'line',
-           //     name: currentCryptocurrencySelection,
-           //     data: OHLC,
-           //     pointInterval: 1000 * 60
-           // }]
 
        });
+
+
    });
 });
 

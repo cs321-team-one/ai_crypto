@@ -17,7 +17,7 @@ const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST R
  * @return {string}
  */
 const PRICING_API = function(ticker){
-    return `https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=GBP&limit=720`;
+    return `https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=USD&limit=720`;
 };
 // const PRICING_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
 const PRICE_REFRESH_RATE = 10000;
