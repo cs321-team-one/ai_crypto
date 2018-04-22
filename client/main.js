@@ -1,3 +1,5 @@
+
+
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Highcharts } from 'highcharts/highcharts'
@@ -103,7 +105,7 @@ Template.Pricing.onRendered(function(){
           if(i === 0){
               let OHLC = [];
               let timeArray = [];
-              query.data.forEach((priceDatum,i)=>{
+              query.data.forEach((priceDatum)=>{
                   OHLC.push(priceDatum.close);
                   timeArray.push(priceDatum.time);
                   //priceDatum.time,priceDatum.open, priceDatum.high, priceDatum.low,
@@ -115,7 +117,7 @@ Template.Pricing.onRendered(function(){
                       type: 'line'
                   },
                   title: {
-                      text: 'Closing Price'
+                      text: '12 Hour Price Overview'
                   },
 
                   yAxis: [{
