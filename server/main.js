@@ -10,9 +10,10 @@ const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST R
 
 
 // Price related constants
-const PRICING_API = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,XRP,BCH,EOS,ADA,XLM,NEO,MIOTA&tsyms=USD,EUR';
-const PRICING_REFRESH_RATE = 60000 * 5;
-
+// const HIST_PRICING_API = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC,ETC,&tsym=USD&limit=180&toTs=1524081796';
+// const PRICING_REFRESH_RATE = 10000;
+const PRICING_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
+const PRICE_REFRESH_RATE = 60000*60;
 
 // Separate API that deals with price prediction. You do not feed this one data. All you do for this one is
 // make a post request with the following data:
@@ -35,15 +36,19 @@ Meteor.methods({
         const result = HTTP.call('GET', NEWS_API);
         return result.data
     },
-    'getPricingData'(){
+    'getPricingData'(ticker){
         const result = HTTP.call('GET', PRICING_API);
         return result.data;
     },
+    // 'getCurrPricingData'(ticker){
+    //     const result = HTTP.call('GET', CURR_PRICING_API);
+    //     return result.data;
+    // },
     'getPricePredictionData'(ticker){
         const response = HTTP.call('POST', PRICE_PREDICTION_API, {
             data: {
-				ticker: ticker
-			}
+                ticker: ticker
+            }
         });
         return response.data;
     }
@@ -55,10 +60,10 @@ Meteor.startup(() => {
     PricePredictions.rawCollection().createIndex({ ticker_minute: 1 }, { unique: true });
 
     Terms.find().forEach(function(term) {
-      if(!term.description) {
-        let websiteData = Scrape.website(term.url);
-        Terms.update({text: term.text}, {$set: {"description" : websiteData.text}});
-      }
+        if(!term.description) {
+            let websiteData = Scrape.website(term.url);
+            Terms.update({text: term.text}, {$set: {"description" : websiteData.text}});
+        }
     } );
 });
 
@@ -131,6 +136,26 @@ Meteor.setInterval(function(){
     });
 }, PRICE_PREDICTION_REFRESH_RATE);
 
+Meteor.setInterval(function (current_ticker) {
+    Meteor.call('getPricingData', current_ticker, function (error,data) {
+        if(error) console.error(error);
+        else{
+            ohlc = [];
+            volume = [];
+            groupingUnits = [];
+
+        }
+    })
+},PRICE_REFRESH_RATE);
+
+// Meteor.setInterval(function (current_ticker) {
+//     Meteor.call('geCurrPricingData', current_ticker, function (error,data) {
+//         if(error) console.error(error);
+//         else{
+//
+//         }
+//     })
+// })
 
 /*
 Meteor.setInterval(function() {
