@@ -168,14 +168,7 @@ Template.PricePrediction.onRendered(function() {
             timesArray.push(datum.time);
         });
 
-        let startDate = moment(timesArray[0]).toDate();
-        startDate = Date.UTC(
-            startDate.getFullYear(),
-            startDate.getMonth(),
-            startDate.getDay(),
-            startDate.getHours(),
-            startDate.getMinutes()
-        );
+        let startDate = moment(timesArray[0]).utc().valueOf();
 
         $('#prediction-chart').highcharts({
             chart: {
