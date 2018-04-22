@@ -6,7 +6,7 @@ import cryptoSocket from "crypto-socket";
 
 // News related constants
 const NEWS_API = 'https://min-api.cryptocompare.com/data/news/?lang=EN';
-const NEWS_REFRESH_RATE = 60000 * 8;
+const NEWS_REFRESH_RATE = 60000 * 10;
 const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST REQUEST WITH JSON ARRAY DATA
 
 
@@ -20,7 +20,7 @@ const PRICING_API = function(ticker){
     return `https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=USD&limit=720`;
 };
 // const PRICING_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
-const PRICE_REFRESH_RATE = 10000;
+const PRICE_REFRESH_RATE = 60000;
 
 // Separate API that deals with price prediction. You do not feed this one data. All you do for this one is
 // make a post request with the following data:
