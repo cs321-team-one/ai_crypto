@@ -53,3 +53,10 @@ body{
   height: 50px;
   width: 100%;
 }
+
+.material-icons{
+    display: inline-flex;
+    vertical-align: bottom;
+    font-size: 25px !important;
+    padding-top: 6px;
+}
