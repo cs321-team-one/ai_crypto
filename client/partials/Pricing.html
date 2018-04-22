@@ -4,7 +4,7 @@
     </head>
     <div class="container">
         <h2 class="pricing_header">{{cryptocurrencySelection}}: ${{currentPrice}}</h2>
-        {{> Test}}
+        {{> PricingChart}}
         {{> cryptoCard}}
     </div>
 
@@ -27,9 +27,9 @@
     </div>
 </template>
 
-<template name="Test">
-    <span class="huge-text">Reserved for charts</span>
-    <div id="container"></div>
+<template name="PricingChart">
+    <span class="huge-text"></span>
+    <div id="pricing-chart"></div>
 </template>
 
 

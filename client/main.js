@@ -66,35 +66,35 @@ Template.HomeLayout.events({
     PRICE HELPERS
  */
 
-Template.Test.onRendered(function() {
-    this.autorun(() => {
-        $('#container').highcharts({
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'Fruit Consumption'
-            },
-            xAxis: {
-                categories: ['Apples', 'Bananas', 'Oranges']
-            },
-            yAxis: {
-                title: {
-                    text: 'Fruit eaten'
-                },
-            },
-            series: [
-                {
-                    name: 'Jane',
-                    data: [1, 0, 4]
-                }, {
-                    name: 'John',
-                    data: [5, 7, 3]
-                }
-            ]
-        });
-    });
-});
+// Template.Pricing.onRendered(function() {
+//     this.autorun(() => {
+//         $('#container').highcharts({
+//             chart: {
+//                 type: 'line'
+//             },
+//             title: {
+//                 text: 'Fruit Consumption'
+//             },
+//             xAxis: {
+//                 categories: ['Apples', 'Bananas', 'Oranges']
+//             },
+//             yAxis: {
+//                 title: {
+//                     text: 'Fruit eaten'
+//                 },
+//             },
+//             series: [
+//                 {
+//                     name: 'Jane',
+//                     data: [1, 0, 4]
+//                 }, {
+//                     name: 'John',
+//                     data: [5, 7, 3]
+//                 }
+//             ]
+//         });
+//     });
+// });
 
 
 Template.Pricing.helpers({
@@ -133,12 +133,45 @@ Template.Pricing.onRendered(function(){
 
        PricingQuery.forEach((query, i)=>{
           if(i === 0){
-              let open = [];
-              query.data.forEach((priceDatum)=>{
-                  open.push(priceDatum.open);
+              let OHLC = [];
+
+              query.data.forEach((priceDatum,i)=>{
+                  OHLC.push([priceDatum.time,priceDatum.open, priceDatum.high, priceDatum.low, priceDatum.close,])
+                  console.log(OHLC);
               });
-              console.log(open);
           }
+       });
+       $('#pricing-chart').highcharts({
+           chart: {
+               type: 'line'
+           },
+           title: {
+               text: 'Price'
+           },
+
+           yAxis: [{
+               title: {
+                   text: 'Price'
+               },
+           }],
+           xAxis: {
+               type: 'dateTime',
+               title: {
+                   text: 'Time'
+               }
+           },
+           // plotOptions:{
+           //     series: {
+           //         pointStart: startDate
+           //     }
+           // },
+           // series: [{
+           //     type: 'line',
+           //     name: currentCryptocurrencySelection,
+           //     data: OHLC,
+           //     pointInterval: 1000 * 60
+           // }]
+
        });
    });
 });
