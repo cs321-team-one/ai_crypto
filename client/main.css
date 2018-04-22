@@ -2,9 +2,9 @@ body{
     background-color: #455a64;
     color: #00ffcc;
 }
-.pricing_header{
-    text-align: center;
-}
+/*.pricing_header{*/
+    /*text-align: center;*/
+/*}*/
 
 @media only screen and (max-width: 600px) {
     .searchbarfix{
@@ -45,6 +45,10 @@ body{
 
 .chartContainer {
     border-style: solid;
+}
+
+.current-price {
+    color: #7FFF00;
 }
 
 .card-content:after {

@@ -3,9 +3,10 @@
         <title>simple</title>
     </head>
     <div class="container">
-        <h2 class="pricing_header">{{cryptocurrencySelection}}: ${{currentPrice}}</h2>
+        <h2 class="pricing_header">{{cryptocurrencySelection}}
+        </h2>
+        <h3 class="current-price">${{currentPrice}}</h3>
         {{> PricingChart}}
-        {{> cryptoCard}}
     </div>
 
     <div class="container">
@@ -15,17 +16,6 @@
 
 </template>
 
-<template name="cryptoCard">
-    <div class="col s1 m4">
-        <div class="card-panel blue-grey darken-1">
-            <h5 class="cryptoCard_header">{{cryptocurrencySelection}}</h5>
-            <p>Placeholder Value #1:</p>
-            <p>Placeholder Value #2:</p>
-            <p>Placeholder Value #3:</p>
-            <p>Placeholder Value #4:</p>
-        </div>
-    </div>
-</template>
 
 <template name="PricingChart">
     <span class="huge-text"></span>
