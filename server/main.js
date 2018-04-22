@@ -12,8 +12,14 @@ const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST R
 // Price related constants
 // const HIST_PRICING_API = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC,ETC,&tsym=USD&limit=180&toTs=1524081796';
 // const PRICING_REFRESH_RATE = 10000;
-const PRICING_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
-const PRICE_REFRESH_RATE = 60000*60;
+/**
+ * @return {string}
+ */
+const PRICING_API = function(ticker){
+    return `https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=GBP&limit=720`;
+};
+// const PRICING_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
+const PRICE_REFRESH_RATE = 60000;
 
 // Separate API that deals with price prediction. You do not feed this one data. All you do for this one is
 // make a post request with the following data:
@@ -37,7 +43,7 @@ Meteor.methods({
         return result.data
     },
     'getPricingData'(ticker){
-        const result = HTTP.call('GET', PRICING_API);
+        const result = HTTP.call('GET', PRICING_API(ticker));
         return result.data;
     },
     // 'getCurrPricingData'(ticker){
@@ -58,6 +64,8 @@ Meteor.startup(() => {
     News.rawCollection().createIndex({ id: 1 }, { unique: true });
     PricePredictions.rawCollection().createIndex({ ticker: 1 }, { unique: false });
     PricePredictions.rawCollection().createIndex({ ticker_minute: 1 }, { unique: true });
+
+    Pricing.rawCollection().createIndex({ticker: 1}, {unique: true});
 
     Terms.find().forEach(function(term) {
         if(!term.description) {
@@ -136,16 +144,24 @@ Meteor.setInterval(function(){
     });
 }, PRICE_PREDICTION_REFRESH_RATE);
 
-Meteor.setInterval(function (current_ticker) {
-    Meteor.call('getPricingData', current_ticker, function (error,data) {
-        if(error) console.error(error);
-        else{
-            ohlc = [];
-            volume = [];
-            groupingUnits = [];
+Meteor.setInterval(function () {
+    CRYPTOS_TO_PREDICT.forEach((ticker)=>{
+        Meteor.call('getPricingData', ticker, function (error,data) {
+            if(error) console.error(error);
+            else{
+                let data_to_add = {
+                    ticker: ticker,
+                    data: data
+                };
 
-        }
-    })
+                Pricing.update({ticker: ticker}, data_to_add, {upsert: true});
+                // data.forEach(datum)=>{
+                //     // data.find({})
+                // }
+
+            }
+        })
+    });
 },PRICE_REFRESH_RATE);
 
 // Meteor.setInterval(function (current_ticker) {
