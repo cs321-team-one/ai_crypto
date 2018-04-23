@@ -37,26 +37,12 @@ body{
 }
 
 .card-content:after {
-  content: "";
-  display: block;
-  height: 50px;
+  display: compact;
   width: 100%;
 }
 
 .sidenav-icons{
     display: inline-flex;
     vertical-align: bottom;
-
 }
 
-.card-stacked {
-    max-height: 100px;
-    display: inline-block;
-}
-
-.card .card-content {
-    padding: 15px 25px !important;
-}
-.card-action {
-    padding: 5px 25px !important;
-}
