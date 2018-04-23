@@ -31,6 +31,9 @@
         <div class="card-content">
             <h5>{{newsArticle.title}}</h5>
             <br />
+            <p align="right">
+                <span class="grey-text text-lighten-1">{{newsArticle.published_on}}</span>
+            </p>
 
             <p class="flow-text">
                 {{#if newsArticle.prediction}}
@@ -49,10 +52,6 @@
             </div>
 
             <br/>
-
-            <p align="right">
-                <span class="grey-text text-lighten-1">{{newsArticle.published_on}}</span>
-            </p>
 
         </div>
         <div class="card-action">
