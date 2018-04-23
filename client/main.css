@@ -2,21 +2,6 @@ body{
     background-color: #455a64;
     color: #00ffcc;
 }
-/*.pricing_header{*/
-    /*text-align: center;*/
-/*}*/
-
-@media only screen and (max-width: 600px) {
-    .searchbarfix{
-        height: 56px !important;
-    }
-}
-@media only screen and (min-width: 601px) {
-    .searchbarfix{
-        height: 64px !important;
-
-    }
-}
 
 /*Override the stupid misaligning shit*/
 .input-field .label-icon{
@@ -58,9 +43,9 @@ body{
   width: 100%;
 }
 
-.material-icons{
+.sidenav-icons{
     display: inline-flex;
     vertical-align: bottom;
-    font-size: 25px !important;
-    padding-top: 6px;
+
 }
+
