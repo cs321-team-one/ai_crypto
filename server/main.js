@@ -17,7 +17,7 @@ const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST R
  * @return {string}
  */
 const PRICING_API = function(ticker){
-    return `https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=USD&limit=720`;
+    return `https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=USD&limit=2000`;
 };
 // const PRICING_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
 const PRICE_REFRESH_RATE = 60000;
@@ -47,10 +47,6 @@ Meteor.methods({
         const result = HTTP.call('GET', PRICING_API(ticker));
         return result.data;
     },
-    // 'getCurrPricingData'(ticker){
-    //     const result = HTTP.call('GET', CURR_PRICING_API);
-    //     return result.data;
-    // },
     'getPricePredictionData'(ticker){
         const response = HTTP.call('POST', PRICE_PREDICTION_API, {
             data: {
