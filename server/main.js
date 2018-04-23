@@ -1,14 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
-import { News, Pricing, PricePredictions, Terms, CurrentPriceSocket} from '../lib/collections.js';
-import cryptoSocket from "crypto-socket";
+import { News, Pricing, PricePredictions, Terms, CurrentPrices} from '../lib/collections.js';
 
 
 // News related constants
 const NEWS_API = 'https://min-api.cryptocompare.com/data/news/?lang=EN';
 const NEWS_REFRESH_RATE = 60000 * 10;
 const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST REQUEST WITH JSON ARRAY DATA
-
+const CURRENT_PRICE_REFRESH = 10000;
 
 // Price related constants
 // const HIST_PRICING_API = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC,ETC,&tsym=USD&limit=180&toTs=1524081796';
@@ -16,10 +15,24 @@ const NEWS_PREDICTION_API = 'http://localhost:4444/news'; // THIS NEEDS A POST R
 /**
  * @return {string}
  */
-const PRICING_API = function(ticker){
+const HISTORICAL_PRICE_API = function(ticker){
     return `https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=USD&limit=2000`;
 };
-// const PRICING_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
+
+/**
+ * @return {string}
+ */
+const CURRENT_PRICE_API = function (tickers){
+    let fsyms = '';
+    tickers.forEach((ticker)=>{
+        fsyms += ticker + ',';
+    });
+    fsyms = fsyms.substring(0, fsyms.length - 1);
+
+    return `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms}&tsyms=USD`;
+};
+
+// const HISTORICAL_PRICE_API = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=GBP&limit=720';
 const PRICE_REFRESH_RATE = 60000;
 
 // Separate API that deals with price prediction. You do not feed this one data. All you do for this one is
@@ -32,6 +45,7 @@ const PRICE_REFRESH_RATE = 60000;
 // You can change BTC to the cryptocurrency that cryptocompare supports.
 const PRICE_PREDICTION_REFRESH_RATE = 60000 * 8; // Price prediction goes 16 minutes into the future
 const PRICE_PREDICTION_API = 'http://localhost:4444/price';
+
 const CRYPTOS_TO_PREDICT = [
     "BTC",
     "ETH",
@@ -44,7 +58,7 @@ Meteor.methods({
         return result.data
     },
     'getPricingData'(ticker){
-        const result = HTTP.call('GET', PRICING_API(ticker));
+        const result = HTTP.call('GET', HISTORICAL_PRICE_API(ticker));
         return result.data;
     },
     'getPricePredictionData'(ticker){
@@ -54,16 +68,12 @@ Meteor.methods({
             }
         });
         return response.data;
+    },
+    'getCurrentPrice'(tickers){
+        const response = HTTP.call('GET', CURRENT_PRICE_API(tickers));
+        return response.data;
     }
 });
-
-function initPriceSocket() {
-    let tickersToSubscribe = [];
-    CRYPTOS_TO_PREDICT.forEach((ticker)=>{
-        tickersToSubscribe.push(ticker+'USD');
-    });
-    cryptoSocket.start('bitfinex', tickersToSubscribe);
-}
 
 Meteor.startup(() => {
     News.rawCollection().createIndex({ id: 1 }, { unique: true });
@@ -71,7 +81,7 @@ Meteor.startup(() => {
     PricePredictions.rawCollection().createIndex({ ticker_minute: 1 }, { unique: true });
 
     Pricing.rawCollection().createIndex({ticker: 1}, {unique: true});
-    CurrentPriceSocket.rawCollection().createIndex({ticker: 1}, {unique: true});
+    CurrentPrices.rawCollection().createIndex({ticker: 1}, {unique: true});
 
     Terms.find().forEach(function(term) {
         if(!term.description) {
@@ -80,10 +90,7 @@ Meteor.startup(() => {
         }
     } );
 
-    initPriceSocket();
-
 });
-
 
 // Creates a never-ending loop that keeps calling Meteor's 'getNewsData' method and upserts the response data to the
 // News collection
@@ -174,19 +181,18 @@ Meteor.setInterval(function () {
 },PRICE_REFRESH_RATE);
 
 
-Meteor.setInterval(()=>{
-    let currentPrice = cryptoSocket.Exchanges['bitfinex'];
-
-    if(currentPrice !== undefined){
-        for(let key in currentPrice) {
-            let currentTicker = key.replace('USD', '');
-            let currentPriceToAdd = {
-                ticker: currentTicker,
-                price: currentPrice[key]
-            };
-
-            CurrentPriceSocket.update({ticker: currentTicker}, currentPriceToAdd, {upsert: true});
+Meteor.setInterval(function () {
+    Meteor.call('getCurrentPrice', CRYPTOS_TO_PREDICT, function (error,data) {
+        if(error) console.error(error);
+        else{
+            for(let ticker in data){
+                if(data.hasOwnProperty(ticker)) {
+                    CurrentPrices.update({ticker: ticker}, {
+                        ticker: ticker,
+                        price: data[ticker]['USD']
+                    }, {upsert: true});
+                }
+            }
         }
-    }
-
-}, 1000);
+    });
+},CURRENT_PRICE_REFRESH);

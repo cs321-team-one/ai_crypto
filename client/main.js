@@ -6,7 +6,7 @@ import Highcharts from 'highcharts/highstock'
 
 
 // Data from our NEWS api
-import { News, PricePredictions, Terms, CurrentPriceSocket, Pricing} from '../lib/collections.js';
+import { News, PricePredictions, Terms, CurrentPrices, Pricing} from '../lib/collections.js';
 const MAX_ARTICLES = 20;
 
 const supportedCryptocurrencies = {
@@ -70,7 +70,7 @@ Template.Pricing.helpers({
             currentCryptocurrencySelection.indexOf('(') + 1,
             currentCryptocurrencySelection.indexOf(')')
         );
-        let currentData = CurrentPriceSocket.findOne({ticker: ticker});
+        let currentData = CurrentPrices.findOne({ticker: ticker});
 
         return currentData.price.toFixed(2);
     }
