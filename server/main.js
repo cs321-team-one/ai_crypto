@@ -133,6 +133,19 @@ Meteor.setInterval(function() {
     });
 }, NEWS_REFRESH_RATE);
 
+exports.insertPredictionData = function(data, current_ticker){
+    let current_time = new Date();
+    data.forEach((datum, i)=>{
+        let prediction_time = moment(current_time).add(i+1, 'minutes');
+        let data_to_insert = {
+            ticker_minute: `${current_ticker}_${i+1}`,
+            price: datum,
+            ticker: current_ticker,
+            time: prediction_time.toDate()
+        };
+        PricePredictions.update(data_to_insert.ticker_minute, data_to_insert, { upsert: true });
+    });
+};
 
 Meteor.setInterval(function(){
 
@@ -143,17 +156,7 @@ Meteor.setInterval(function(){
             Meteor.call('getPricePredictionData', current_ticker, function(error, data){ // Prediction data is simply an array at minute intervals
                 if(error) console.error(error);
                 else{
-                    let current_time = new Date();
-                    data.forEach((datum, i)=>{
-                        let prediction_time = moment(current_time).add(i+1, 'minutes');
-                        let data_to_insert = {
-                            ticker_minute: `${current_ticker}_${i+1}`,
-                            price: datum,
-                            ticker: current_ticker,
-                            time: prediction_time.toDate()
-                        };
-                        PricePredictions.update(data_to_insert.ticker_minute, data_to_insert, { upsert: true });
-                    });
+                    exports.insertPredictionData(data, current_ticker);
                 }
             });
         }, DELAY_BETWEEN_REQUESTING_DIFFERENT_CRYPTOS);
