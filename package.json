@@ -2,12 +2,16 @@
   "name": "testMeteor",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "test": "TEST_WATCH=1 meteor test --driver-package meteortesting:mocha --port 3100"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.44",
     "highcharts": "^6.1.0",
     "highstock-module": "^2.1.4",
     "meteor-node-stubs": "^0.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2"
   }
 }
