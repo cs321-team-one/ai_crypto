@@ -94,6 +94,19 @@ Meteor.startup(() => {
 
 // Creates a never-ending loop that keeps calling Meteor's 'getNewsData' method and upserts the response data to the
 // News collection
+
+exports.insertNewsData = function(data, prediction){
+    data.forEach((datum, i)=>{
+        if(prediction.length === data.length){
+            datum['prediction'] = prediction[i] === 1 ? 'BUY': 'SELL';
+        }
+
+        try{
+            News.update(datum['id'], datum, { upsert: true });
+        } catch (e) {}
+    });
+};
+
 Meteor.setInterval(function() {
     Meteor.call('getNewsData', function(error, data) {
         if(error){
@@ -118,16 +131,7 @@ Meteor.setInterval(function() {
                 console.error(e);
             }
 
-            data.forEach((datum, i)=>{
-                if(prediction.length === data.length){
-                    datum['prediction'] = prediction[i] === 1 ? 'BUY': 'SELL';
-                }
-
-                try{
-                    News.update(datum['id'], datum, { upsert: true });
-                } catch (e) {}
-
-            });
+            exports.insertNewsData(data, prediction);
 
         }
     });
