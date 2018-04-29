@@ -30,3 +30,4 @@ momentjs:moment
 anonyfox:scrape
 practicalmeteor:chai
 meteortesting:mocha
+dburles:factory
